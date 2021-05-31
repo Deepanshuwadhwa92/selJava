@@ -3,8 +3,13 @@ package pages;
 import core.BasePage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
 
 public class YahooSearchPage extends BasePage {
+
+    public YahooSearchPage(WebDriver driver) {
+        super(driver);
+    }
 
     private By searchInput = By.name("p");
 
@@ -20,7 +25,7 @@ public class YahooSearchPage extends BasePage {
         enterText(searchInput, Keys.ENTER.toString());
     }
 
-    public void sawYahooPage(){
+    public void sawYahooPage() {
         assert true;
     }
 }

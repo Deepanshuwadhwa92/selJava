@@ -6,6 +6,9 @@ public class DriverManager {
 
     private static ThreadLocal<WebDriver> driver = new ThreadLocal();
 
+    public static void createDriver() {
+
+    }
     public static WebDriver getDriver() {
         return driver.get();
     }

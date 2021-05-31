@@ -11,3 +11,7 @@ Feature: Outline test
       | homepage | searchword |
       | google   | kanmani    |
       | yahoo    | Tamil      |
+      | google   | kanmani    |
+      | yahoo    | Tamil      |
+      | google   | kanmani    |
+      | yahoo    | Tamil      |

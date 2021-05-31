@@ -3,8 +3,13 @@ package pages;
 import core.BasePage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
 
 public class GoogleSearchPage extends BasePage {
+
+    public GoogleSearchPage(WebDriver driver) {
+        super(driver);
+    }
 
     private By searchInput = By.name("q");
 
