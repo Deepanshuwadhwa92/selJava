@@ -9,9 +9,12 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
 
 public class Hooks {
 
@@ -23,12 +26,12 @@ public class Hooks {
 
     public List<String> setUserOptions() {
         try {
-            userOptions = new LinkedList<String>(Arrays.asList(System.getProperty("options", "").split(",")));
+            userOptions = new LinkedList<>(Arrays.asList(System.getProperty("options", "").split(",")));
         } catch (Exception e) {
             throw new RuntimeException("Options not valid");
         }
         return userOptions;
-    }
+    }                   
 
     public Browsers.RunType setMode() {
         String modeValue = System.getProperty("mode", "LOCAL").toUpperCase();
@@ -36,7 +39,7 @@ public class Hooks {
     }
 
     public Browsers setBrowsers() {
-        String browserName =  System.getProperty("browsers", "CHROME").toUpperCase();
+        String browserName = System.getProperty("browsers", "CHROME").toUpperCase();
         return Browsers.valueOf(browserName);
     }
 
@@ -47,15 +50,23 @@ public class Hooks {
         DriverManager.setDriver(driver);
     }
 
-    @BeforeTest
+    @BeforeTest(alwaysRun = true)
     public void beforeTest() {
-        log.info("Creating the Driver ..");
+        log.info("Creating the Driver .. for thread {}", Thread.currentThread().getId());
         WebDriver driver = new EventFiringWebDriver(browsers.createDriver(mode, userOptions));
         DriverManager.setDriver(driver);
     }
 
-    @After
-    public void afterScenario(Scenario scenario){
+    @AfterTest(alwaysRun = true)
+    public void afterScenario() {
+        log.info("Quit the Driver");
         DriverManager.quitDriver();
     }
+
+    @After
+    public void afterScenario(Scenario scenario) {
+        log.info("Quit the Driver");
+        DriverManager.quitDriver();
+    }
+
 }

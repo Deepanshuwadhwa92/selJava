@@ -82,12 +82,16 @@
                 <configuration>
                     <parallel>classes</parallel>
                     <perCoreThreadCount>false</perCoreThreadCount>
-                    <threadCount>${threadCount}</threadCount>
+                    <useUnlimitedThreads>true</useUnlimitedThreads>
                     <skipTests>false</skipTests>
                     <properties>
                         <property>
                             <name>dataproviderthreadcount</name>
                             <value>${threadCount}</value>
+                        </property>
+                        <property>
+                            <name>listener</name>
+                            <value>core.RetryListener, core.RetryHandler</value>
                         </property>
                     </properties>
                 </configuration>

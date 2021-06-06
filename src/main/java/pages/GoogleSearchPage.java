@@ -7,11 +7,11 @@ import org.openqa.selenium.WebDriver;
 
 public class GoogleSearchPage extends BasePage {
 
+    private By searchInput = By.name("q");
+
     public GoogleSearchPage(WebDriver driver) {
         super(driver);
     }
-
-    private By searchInput = By.name("q");
 
     public void navigateToGoogle() {
         navigateToURL("https://www.google.com");

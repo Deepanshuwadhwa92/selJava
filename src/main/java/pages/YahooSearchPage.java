@@ -7,11 +7,11 @@ import org.openqa.selenium.WebDriver;
 
 public class YahooSearchPage extends BasePage {
 
+    private By searchInput = By.name("p");
+
     public YahooSearchPage(WebDriver driver) {
         super(driver);
     }
-
-    private By searchInput = By.name("p");
 
     public void navigateToYahoo() {
         navigateToURL("https://au.yahoo.com/");

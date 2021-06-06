@@ -27,18 +27,21 @@ public enum Browsers {
         }
     };
 
-    Browsers() {
-        try {
-            hubUrl = new URL(System.getProperty("host", "http://127.0.0.1:4444/wd/hub"));
-        } catch (MalformedURLException exception) {
-            log.warn("URL Exception. Please check your HUB: {}", exception);
-        }
-    }
 
     public abstract WebDriver createDriver(RunType mode, List<String> userOptions);
 
-    public URL hubUrl;
-    public Logger log = LoggerFactory.getLogger(Browsers.class);
+
+    public static URL hubUrl = null;
+
+    private static final Logger log = LoggerFactory.getLogger(Browsers.class);
+
+    static {
+        try {
+            hubUrl = new URL(System.getProperty("host", "http://127.0.0.1:4444/wd/hub"));
+        } catch (MalformedURLException exception) {
+            log.warn("URL Exception. {}. Please check your HUB: {}", hubUrl, exception.getMessage());
+        }
+    }
 
     public enum RunType {
         REMOTE, LOCAL

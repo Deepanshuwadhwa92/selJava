@@ -23,7 +23,8 @@ public class ChromeTestDriver {
             driver = new ChromeDriver(options);
         } catch (Exception ex) {
            ex.printStackTrace();
-            throw new RuntimeException("Failed to create the webdriver");
+           log.error("Failed to create webDriver for Chrome with user Options: {} and Exception message: {}", userOptions, ex.getMessage());
+           return null;
         }
         return driver;
     }

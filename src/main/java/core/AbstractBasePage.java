@@ -1,6 +1,5 @@
 package core;
 
-import org.jetbrains.annotations.Nullable;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -8,11 +7,10 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.time.Duration;
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-public abstract class AbstractBasePage {
+public class AbstractBasePage {
 
     AbstractBasePage(WebDriver driver) {
         this.driver = driver;
@@ -43,7 +41,7 @@ public abstract class AbstractBasePage {
      * @param element - Type: By
      */
     protected void clickElement(By element) {
-        clickElement(waitUntilElementIsClickable(element,BASE_TIME_OUT));
+        clickElement(waitUntilElementIsClickable(element, BASE_TIME_OUT));
     }
 
     /**
@@ -155,7 +153,7 @@ public abstract class AbstractBasePage {
      * @param textValue - Value need to enter into the field
      */
     protected void enterText(By locator, String textValue) {
-        log.info("Enter the text: {} into the Field {}",textValue, locator);
+        log.info("Enter the text: {} into the Field {}", textValue, locator);
         enterText(existingElement(locator), textValue);
     }
 
@@ -166,7 +164,7 @@ public abstract class AbstractBasePage {
      * @param textValue - Value need to enter into the field
      */
     protected void enterText(WebElement element, String textValue) {
-        log.info("Enter the text: {} into the Field {}",textValue, element);
+        log.info("Enter the text: {} into the Field {}", textValue, element);
         try {
             waitForAMoment(BASE_TIME_OUT).until(ExpectedConditions.visibilityOf(element));
             element.sendKeys(textValue);
@@ -177,6 +175,7 @@ public abstract class AbstractBasePage {
 
     /**
      * Wait Until the element is clickable
+     *
      * @param element
      * @param duration
      * @return
@@ -189,10 +188,34 @@ public abstract class AbstractBasePage {
         return waitForAMoment(duration).until((ExpectedCondition<Boolean>) input -> {
             try {
                 return driver.findElements(locator).size() > 0;
-            }catch (Exception e) {
+            } catch (Exception e) {
                 return false;
             }
         });
+    }
+
+    protected Boolean waitUntilElementIsDisappear(By locator, Long duration) {
+        return waitForAMoment(duration).until(ExpectedConditions.invisibilityOfElementLocated(locator));
+    }
+
+    protected WebElement waitUntilElementIsDisplayed(WebElement element, Long duration) {
+        return waitForAMoment(duration).until(ExpectedConditions.elementToBeClickable(element));
+    }
+
+    /**
+     * Poll wait
+     *
+     * @param polling  - polling time in millisecond
+     * @param duration - poll duration in seconds
+     * @return
+     */
+    protected WebDriverWait waitForMomentWithPolling(Long polling, Long duration) {
+        return (WebDriverWait) new WebDriverWait(driver, duration)
+                .pollingEvery(Duration.ofMillis(polling))
+                .ignoring(ElementClickInterceptedException.class)
+                .ignoring(ElementNotVisibleException.class)
+                .ignoring(StaleElementReferenceException.class)
+                .ignoring(NoSuchElementException.class);
     }
 
     /**

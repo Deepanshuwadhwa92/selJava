@@ -11,7 +11,7 @@ Feature: Search for a particular destination
 
     Examples:
       | places    | destCode |
-      | Chennai   | MAA      |
+      | Chennai   | MApA      |
       | Jaipur    | JAI      |
       | Goa       | GOI      |
       | Bangalore | BLR      |
