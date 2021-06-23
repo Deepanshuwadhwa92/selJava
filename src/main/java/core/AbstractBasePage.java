@@ -12,14 +12,9 @@ import java.util.List;
 
 public class AbstractBasePage {
 
-    AbstractBasePage(WebDriver driver) {
-        this.driver = driver;
-    }
-
     private static Logger log = LoggerFactory.getLogger(AbstractBasePage.class);
     protected WebDriver driver;
     protected final static Long BASE_TIME_OUT = 10L;
-
     /**
      * Navigate to a URL function
      *

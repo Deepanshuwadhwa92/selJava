@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
+import util.PropertiesManager;
 
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -45,6 +46,10 @@ public class Hooks {
 
     @Before
     public void beforeScenario(Scenario scenario) {
+        log.info("Reading Properties Files...");
+        PropertiesManager prop = new PropertiesManager();
+        DriverManager.setProperties(prop);
+
         log.info("Creating the Driver ..");
         WebDriver driver = new EventFiringWebDriver(browsers.createDriver(mode, userOptions));
         DriverManager.setDriver(driver);

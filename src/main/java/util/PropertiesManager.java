@@ -4,7 +4,6 @@ import org.apache.commons.lang3.ObjectUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.net.URI;
@@ -20,13 +19,13 @@ public class PropertiesManager extends Properties {
 
     private final List<String> listOfEnv = Arrays.asList("LOCALHOST", "DEV","UAT", "PRD");
 
-    public PropertiesManager() throws IOException {
+    public PropertiesManager() {
         String targetEnv = getEnv();
         String fileName = targetEnv+".properties";
 
-        try(FileReader fr =  new FileReader(Paths.get(new URI(this.getClass().getResource(fileName).toString())).toFile())) {
+        try(FileReader fr =  new FileReader(Paths.get(new URI(this.getClass().getClassLoader().getResource(fileName).toString())).toFile())) {
             load(fr);
-        } catch (URISyntaxException | FileNotFoundException e) {
+        } catch (URISyntaxException | IOException e) {
             e.printStackTrace();
             log.error("File is Empty. Please check the file: {} on Environment: {}", fileName, targetEnv);
         }

@@ -4,15 +4,14 @@ import org.openqa.selenium.WebDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
+import java.util.Properties;
+
 public class DriverManager {
 
     private static Logger log = LoggerFactory.getLogger(DriverManager.class);
-
+    private static Properties properties = new Properties();
     private static ThreadLocal<WebDriver> driver = new ThreadLocal();
-
-    public static void createDriver() {
-
-    }
 
     public static WebDriver getDriver() {
         log.info("Get the Driver for thread: --> {}", Thread.currentThread().getId());
@@ -24,6 +23,14 @@ public class DriverManager {
         DriverManager.driver.set(driver);
     }
 
+    public static String getProperties(String property) {
+        return properties.getProperty(property);
+    }
+
+    public static void setProperties(Properties properties) {
+        DriverManager.properties = properties;
+    }
+
     /**
      * To Quit the driver
      */
@@ -31,11 +38,16 @@ public class DriverManager {
     public static void quitDriver() {
         log.info("Close the Driver for thread: --> {}", Thread.currentThread().getId());
         //Check The driver Type
-        if (driver.get() == null) {
-            return;
+        try {
+            if (driver.get() != null) {
+                driver.get().quit();
+                driver.remove();
+                Runtime.getRuntime().exec("taskkill /F /IM Chromedriver.exe");
+            }
+        } catch (IOException e) {
+            log.error("IO Exception Occurred {}", e.getMessage());
         }
-        driver.get().quit();
-        driver.remove();
+
     }
 
 }

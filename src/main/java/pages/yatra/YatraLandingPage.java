@@ -1,8 +1,8 @@
 package pages.yatra;
 
 import core.BasePage;
+import driver.DriverManager;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 
@@ -10,16 +10,13 @@ import java.util.List;
 
 public class YatraLandingPage extends BasePage {
 
-    public YatraLandingPage(WebDriver driver) {
-        super(driver);
-    }
 
     private By flightOrigin = By.id("BE_flight_origin_city");
     private By addedDestination = By.xpath("custom-autoTxt");
     private By dropDownList = By.cssSelector("div[class='ac_results origin_ac'] p[class='ac_cityname']");
 
     public void navigateToYatraPage() {
-        navigateToURL("https://www.yatra.com/");
+        navigateToURL(DriverManager.getProperties("yatraUrl"));
     }
 
     public void clickOnDestinationField(String destination) {

@@ -1,26 +1,21 @@
 package definition;
 
-import driver.DriverManager;
+import core.BasePage;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import org.openqa.selenium.InvalidArgumentException;
-import org.openqa.selenium.WebDriver;
-import pages.GoogleSearchPage;
-import pages.YahooSearchPage;
 
-public class SearchTest {
-
-    private WebDriver driver = DriverManager.getDriver();
+public class SearchTest extends BasePage {
 
     @Given("The User is navigate to {string} Home page")
     public void navigateToPage(String searchPage) {
         switch (searchPage) {
             case "google":
-                new GoogleSearchPage(driver).navigateToGoogle();
+                pages().getGoogleSearchPage().navigateToGoogle();
                 break;
             case "yahoo":
-                new YahooSearchPage(driver).navigateToYahoo();
+                pages().getYahooSearchPage().navigateToYahoo();
                 break;
             default:
                 throw new InvalidArgumentException("Not a Valid Search Page");
@@ -31,10 +26,10 @@ public class SearchTest {
     public void enterSearchParameter(String parameter, String page) {
         switch (page) {
             case "google":
-                new GoogleSearchPage(driver).enterATextInGoogle(parameter);
+                pages().getGoogleSearchPage().enterATextInGoogle(parameter);
                 break;
             case "yahoo":
-                new YahooSearchPage(driver).enterTextInYahoo(parameter);
+                pages().getYahooSearchPage().enterTextInYahoo(parameter);
                 break;
             default:
                 throw new RuntimeException("Not Found this page");
@@ -46,10 +41,10 @@ public class SearchTest {
     public void enterKeyPressOnSearchPage(String searchPage) {
         switch (searchPage) {
             case "google":
-                new GoogleSearchPage(driver).enterKeyPress();
+                pages().getGoogleSearchPage().enterKeyPress();
                 break;
             case "yahoo":
-                new YahooSearchPage(driver).enterKeyPressOnYahoo();
+                pages().getYahooSearchPage().enterKeyPressOnYahoo();
                 break;
             default:
                 throw new RuntimeException("Not Found this page");
@@ -60,10 +55,10 @@ public class SearchTest {
     public void canSeeTheSearchResults(String searchPage) {
         switch (searchPage) {
             case "google":
-                new GoogleSearchPage(driver).sawGooglePage();
+                pages().getGoogleSearchPage().sawGooglePage();
                 break;
             case "yahoo":
-                new YahooSearchPage(driver).sawYahooPage();
+                pages().getYahooSearchPage().sawYahooPage();
                 break;
             default:
                 throw new RuntimeException("Not Found this page");

@@ -1,20 +1,16 @@
-package pages;
+package pages.search;
 
 import core.BasePage;
+import driver.DriverManager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
 
 public class GoogleSearchPage extends BasePage {
 
     private By searchInput = By.name("q");
 
-    public GoogleSearchPage(WebDriver driver) {
-        super(driver);
-    }
-
     public void navigateToGoogle() {
-        navigateToURL("https://www.google.com");
+        navigateToURL(DriverManager.getProperties("googleUrl"));
     }
 
     public void enterATextInGoogle(String value) {

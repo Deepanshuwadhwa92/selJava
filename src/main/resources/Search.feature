@@ -14,4 +14,4 @@ Feature: Outline test
       | google   | kanmani    |
       | yahoo    | Tamil      |
       | google   | kanmani    |
-      | yahofo    | Tamil      |
+      | yahoo    | Tamil      |
