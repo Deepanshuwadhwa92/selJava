@@ -15,11 +15,12 @@ Feature: Outline test
       | yahoo    | Tamil      |
       | google   | kanmani    |
       | yahoo    | Tamil      |
+      | google   | Test       |
 
 
-    Scenario: User can view a Facebook Page
+  Scenario: User can view a Facebook Page
 
-      Given The User is navigating to Facebook Page
-      And The User enter userid and password at login Page
-      Then The User can view Facebook Logo
+    Given The User is navigating to Facebook Page
+    And The User enter userid and password at login Page
+    Then The User can view Facebook Logo
 
